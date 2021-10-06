@@ -1,18 +1,15 @@
 package com.dicoding.picodiploma.myrecipesapp.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bumptech.glide.Glide
-import com.dicoding.picodiploma.myrecipesapp.R
 import com.dicoding.picodiploma.myrecipesapp.RecipeResponse
-import com.dicoding.picodiploma.myrecipesapp.RecipeResponses
 import com.dicoding.picodiploma.myrecipesapp.databinding.ActivityMainBinding
 import com.dicoding.picodiploma.myrecipesapp.network.ApiConfig
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -22,28 +19,21 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        getRecipes()
-    }
-
-    private fun getRecipes() {
         isLoading(true)
-        val client = ApiConfig.getApiService().getRecipes()
-        client.enqueue(object : Callback<RecipeResponses> {
-            override fun onResponse(call: Call<RecipeResponses>, response: Response<RecipeResponses>) {
-                response.body()?.let {
-                    showRecipes(it.results)
-                }
-            }
-
-            override fun onFailure(call: Call<RecipeResponses>, t: Throwable) {
-                println("data gagal didapatkan, error $t")
-                isLoading(false)
-            }
-
-        })
+        CoroutineScope(Dispatchers.IO).launch {
+            getRecipes()
+        }
     }
 
-    fun showRecipes(recipes: List<RecipeResponse>){
+    private suspend fun getRecipes() {
+        val response = ApiConfig.getApiService().getRecipes()
+        val results = response.results
+        runOnUiThread {
+            showRecipes(results)
+        }
+    }
+
+    fun showRecipes(recipes: List<RecipeResponse>) {
         val adapter = RecipeAdapter(recipes)
         binding.rvRecipe.layoutManager = LinearLayoutManager(this)
         binding.rvRecipe.adapter = adapter
