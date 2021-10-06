@@ -3,7 +3,6 @@ package com.dicoding.picodiploma.myrecipesapp.ui
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.dicoding.picodiploma.myrecipesapp.RecipeResponse
 import com.dicoding.picodiploma.myrecipesapp.databinding.ItemRecipeBinding
 
