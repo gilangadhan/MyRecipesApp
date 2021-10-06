@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/ivRecipe"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/tvTitle"
+        style="@style/TextAppearance.AppCompat.Headline"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="16dp"
+        android:maxLines="3"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/ivRecipe"
+        app:layout_constraintTop_toTopOf="@id/ivRecipe"
+        tools:text="@tools:sample/lorem[20]" />
+
+    <TextView
+        android:id="@+id/tvTimes"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:paddingTop="4dp"
+        app:layout_constraintEnd_toEndOf="@+id/tvTitle"
+        app:layout_constraintStart_toStartOf="@+id/tvTitle"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+        tools:text="@tools:sample/lorem[10]" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
