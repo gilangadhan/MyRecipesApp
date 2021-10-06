@@ -2,7 +2,9 @@ package com.dicoding.picodiploma.myrecipesapp.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.dicoding.picodiploma.myrecipesapp.R
 import com.dicoding.picodiploma.myrecipesapp.RecipeResponse
 import com.dicoding.picodiploma.myrecipesapp.RecipeResponses
@@ -24,6 +26,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getRecipes() {
+        isLoading(true)
         val client = ApiConfig.getApiService().getRecipes()
         client.enqueue(object : Callback<RecipeResponses> {
             override fun onResponse(call: Call<RecipeResponses>, response: Response<RecipeResponses>) {
@@ -34,6 +37,7 @@ class MainActivity : AppCompatActivity() {
 
             override fun onFailure(call: Call<RecipeResponses>, t: Throwable) {
                 println("data gagal didapatkan, error $t")
+                isLoading(false)
             }
 
         })
@@ -43,5 +47,10 @@ class MainActivity : AppCompatActivity() {
         val adapter = RecipeAdapter(recipes)
         binding.rvRecipe.layoutManager = LinearLayoutManager(this)
         binding.rvRecipe.adapter = adapter
+        isLoading(false)
+    }
+
+    fun isLoading(state: Boolean) {
+        binding.progressBar.isVisible = state
     }
 }
