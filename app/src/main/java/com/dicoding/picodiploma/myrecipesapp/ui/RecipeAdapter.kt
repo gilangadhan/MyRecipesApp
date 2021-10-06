@@ -21,7 +21,7 @@ class RecipeAdapter(private val recipes: List<RecipeResponse>): RecyclerView.Ada
         with(holder.binding){
             tvTitle.text = recipe.title
             tvTimes.text= recipe.times
-            Glide.with(this.root.context).load(recipe.thumb).into(ivRecipe)
+            Glide.with(this.root.context).load(recipe.thumb).centerCrop().into(ivRecipe)
         }
     }
 
